@@ -57,9 +57,12 @@ public class AuthService : IAuthService
         };
         
         var result = await _userManager.CreateAsync(user, registerUserDto.Password);
-        
-        if(!result.Succeeded)
-            throw new ApplicationException($"Failed to register user: {string.Join(',', result.Errors)}");
+
+        if (!result.Succeeded)
+        {
+            var errors = string.Join("; ", result.Errors.Select(e => e.Description));
+            throw new ApplicationException($"Failed to register user: {string.Join(',', errors)}");
+        }
         
         await _userManager.AddToRoleAsync(user, "User");
         
