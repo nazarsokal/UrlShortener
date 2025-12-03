@@ -4,7 +4,7 @@ namespace Services.ServiceContracts;
 
 public interface IUrlShortenerService
 {
-    public Task<Guid> ShortenUrlAsync(CreateShortenUrlDto createShortenedUrlDto);
+    public Task<Guid> ShortenUrlAsync(CreateShortenUrlDto createShortenedUrlDto, Guid userId);
     
     public Task<List<GetShortenUrlSummaryDto>> GetShortenedUrlsAsync();
     

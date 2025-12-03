@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using UrlShortener.API.Models;
+using UrlShortener.Models;
 
-namespace UrlShortener.API.Controllers;
+namespace UrlShortener.Controllers;
 
 public class HomeController : Controller
 {

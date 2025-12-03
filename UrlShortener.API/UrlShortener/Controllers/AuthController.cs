@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Models.DTOs.UserDTOs;
 using Services.ServiceContracts;
 
-namespace UrlShortener.API.Controllers;
+namespace UrlShortener.Controllers;
 
 [ApiController]
 [Route("api/auth")]
