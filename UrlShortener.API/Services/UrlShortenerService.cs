@@ -1,6 +1,9 @@
 using System.Security.Cryptography;
 using System.Text;
+using AutoMapper;
 using Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using Models;
 using Models.DTOs.ShortenUrlDTOs;
 using Services.ServiceContracts;
 
@@ -8,20 +11,61 @@ namespace Services;
 
 public class UrlShortenerService : IUrlShortenerService
 {
+    private readonly UrlShortenerDbContext _dbContext;
+    private readonly IMapper _mapper;
     private readonly string apiUrl = "http://localhost:5130/";
-    public Task<Guid> ShortenUrlAsync(CreateShortenUrlDto createShortenedUrlDto, Guid userId)
+
+    public UrlShortenerService(UrlShortenerDbContext dbContext, IMapper mapper)
     {
-        throw new NotImplementedException();
+        _dbContext = dbContext;
+        _mapper = mapper;
+    }
+    
+    public async Task<Guid> ShortenUrlAndSaveAsync(CreateShortenUrlDto createShortenedUrlDto, Guid userId)
+    {
+        var shortenedUrl = _mapper.Map<ShortenUrl>(createShortenedUrlDto);
+        shortenedUrl.UserIdCreatedBy = userId;
+        
+        var shortenedLink = ShortenUrl(shortenedUrl.OriginalLink);
+        shortenedUrl.ShortenedLink = shortenedLink;
+        
+        if(await ShortenUrlExists(shortenedUrl.ShortenedLink))
+            return Guid.Empty;
+        
+        var result = await _dbContext.ShortenedUrls.AddAsync(shortenedUrl);
+        var rows = await _dbContext.SaveChangesAsync();
+        
+        if(rows > 0)
+            return shortenedUrl.Id;
+        
+        return Guid.Empty;
     }
 
-    public Task<List<GetShortenUrlSummaryDto>> GetShortenedUrlsAsync()
+    public async Task<string> ShortenUrlAsync(string urlToShorten)
     {
-        throw new NotImplementedException();
+        var shortenedUrl = ShortenUrl(urlToShorten);
+        bool ifExists = await _dbContext.ShortenedUrls.AnyAsync(s => s.ShortenedLink == shortenedUrl);
+        
+        if(ifExists)
+            return String.Empty;
+        
+        return shortenedUrl;
     }
 
-    public Task<GetShortenUrlDetailDto> GetShortenedUrlAsync(Guid id, Guid userId)
+    public async Task<List<GetShortenUrlSummaryDto>> GetShortenedUrlsAsync()
     {
-        throw new NotImplementedException();
+        var shortenUrls = await _dbContext.ShortenedUrls.ToListAsync();
+        
+        return _mapper.Map<List<GetShortenUrlSummaryDto>>(shortenUrls);
+    }
+
+    public async Task<GetShortenUrlDetailDto> GetShortenedUrlAsync(Guid id)
+    {
+        var shortenUrl = await _dbContext.ShortenedUrls
+            .FirstOrDefaultAsync(s => s.Id == id);
+        
+        var shortenUrlDto = _mapper.Map<GetShortenUrlDetailDto>(shortenUrl);
+        return shortenUrlDto;
     }
 
     private string ShortenUrl(string url, int length = 8)
@@ -37,4 +81,7 @@ public class UrlShortenerService : IUrlShortenerService
         
         return stringBuilder.ToString();
     }
+    
+    private async Task<bool> ShortenUrlExists(string url) => 
+        await _dbContext.ShortenedUrls.AnyAsync(s => s.ShortenedLink == url);
 }
