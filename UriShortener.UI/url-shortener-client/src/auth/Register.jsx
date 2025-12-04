@@ -1,6 +1,6 @@
 import { useState } from "react";
-import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axios";
 
 export default function Register() {
     const [username, setUsername] = useState("");
@@ -10,12 +10,7 @@ export default function Register() {
 
     const handleRegister = async () => {
         try {
-            await api.post("/auth/register", {
-                username,
-                email,
-                password
-            });
-
+            await api.post("/auth/register", { username, email, password });
             navigate("/login");
         } catch (error) {
             console.error(error);
@@ -33,33 +28,10 @@ export default function Register() {
             backgroundColor: "#f9f9f9",
             fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
         },
-        title: {
-            textAlign: "center",
-            marginBottom: "20px",
-            color: "#1e293b"
-        },
-        input: {
-            width: "100%",
-            padding: "10px",
-            marginBottom: "15px",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-            fontSize: "14px"
-        },
-        button: {
-            width: "100%",
-            padding: "10px",
-            borderRadius: "5px",
-            border: "none",
-            backgroundColor: "#4CAF50",
-            color: "white",
-            fontWeight: "bold",
-            cursor: "pointer",
-            transition: "0.2s"
-        },
-        buttonHover: {
-            backgroundColor: "#3e8e41"
-        }
+        title: { textAlign: "center", marginBottom: "20px", color: "#1e293b" },
+        input: { width: "100%", padding: "10px", marginBottom: "15px", borderRadius: "5px", border: "1px solid #ccc", fontSize: "14px" },
+        button: { width: "100%", padding: "10px", borderRadius: "5px", border: "none", backgroundColor: "#4CAF50", color: "white", fontWeight: "bold", cursor: "pointer", transition: "0.2s", marginBottom: "10px" },
+        linkButton: { width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #4CAF50", backgroundColor: "white", color: "#4CAF50", fontWeight: "bold", cursor: "pointer", transition: "0.2s" }
     };
 
     return (
@@ -93,6 +65,15 @@ export default function Register() {
                 onMouseOut={e => e.currentTarget.style.backgroundColor = "#4CAF50"}
             >
                 Register
+            </button>
+
+            <button
+                style={styles.linkButton}
+                onClick={() => navigate("/login")}
+                onMouseOver={e => e.currentTarget.style.backgroundColor = "#f0fff0"}
+                onMouseOut={e => e.currentTarget.style.backgroundColor = "white"}
+            >
+                Login
             </button>
         </div>
     );

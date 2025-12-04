@@ -1,6 +1,6 @@
 import { useState } from "react";
-import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axios";
 
 export default function Login() {
     const [userName, setUsername] = useState("");
@@ -10,11 +10,7 @@ export default function Login() {
 
     const handleLogin = async () => {
         try {
-            const res = await api.post("/auth/login", {
-                userName,
-                email,
-                password
-            });
+            const res = await api.post("/auth/login", { userName, email, password });
 
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("username", res.data.returnUserDto.userName);
@@ -36,33 +32,11 @@ export default function Login() {
             backgroundColor: "#f9f9f9",
             fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
         },
-        title: {
-            textAlign: "center",
-            marginBottom: "20px",
-            color: "#1e293b"
-        },
-        input: {
-            width: "100%",
-            padding: "10px",
-            marginBottom: "15px",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-            fontSize: "14px"
-        },
-        button: {
-            width: "100%",
-            padding: "10px",
-            borderRadius: "5px",
-            border: "none",
-            backgroundColor: "#1976d2",
-            color: "white",
-            fontWeight: "bold",
-            cursor: "pointer",
-            transition: "0.2s"
-        },
-        buttonHover: {
-            backgroundColor: "#155fa0"
-        }
+        title: { textAlign: "center", marginBottom: "20px", color: "#1e293b" },
+        input: { width: "100%", padding: "10px", marginBottom: "15px", borderRadius: "5px", border: "1px solid #ccc", fontSize: "14px" },
+        button: { width: "100%", padding: "10px", borderRadius: "5px", border: "none", backgroundColor: "#1976d2", color: "white", fontWeight: "bold", cursor: "pointer", transition: "0.2s", marginBottom: "10px" },
+        buttonHover: { backgroundColor: "#155fa0" },
+        linkButton: { width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #1976d2", backgroundColor: "white", color: "#1976d2", fontWeight: "bold", cursor: "pointer", transition: "0.2s" }
     };
 
     return (
@@ -96,6 +70,16 @@ export default function Login() {
                 onMouseOut={e => e.currentTarget.style.backgroundColor = "#1976d2"}
             >
                 Login
+            </button>
+
+            {/* Кнопка переходу на реєстрацію */}
+            <button
+                style={styles.linkButton}
+                onClick={() => navigate("/register")}
+                onMouseOver={e => e.currentTarget.style.backgroundColor = "#e6f0ff"}
+                onMouseOut={e => e.currentTarget.style.backgroundColor = "white"}
+            >
+                Register
             </button>
         </div>
     );
