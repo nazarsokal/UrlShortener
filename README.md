@@ -12,7 +12,7 @@ UrlShortener is a full-stack web application for creating and managing shortened
 - **.NET 8 SDK or newer** (for API)
 - **Docker** (for running SQL Server database)
 - **EF Core CLI** (optional, for DB migrations)
-
+   
 ---
 ## Backend Setup (ASP.NET Core API)
 
@@ -25,6 +25,7 @@ cd UrlShortener
 ### 2. Restore Dependencies
 
 ```bash
+cd UrlShortener.API
 dotnet restore
 ```
 
@@ -60,12 +61,12 @@ In `appsettings.json` of the API project, update your connection string like thi
 To generate a new migration:
 
 ```bash
-dotnet ef migrations add InitialCreate --output-dir Infrastructure/Migrations
+dotnet ef migrations add InitialMigration --project Infrastructure/Infrastructure.csproj --startup-project UrlShortener/UrlShortener.csproj
 ```
 
 To create the database:
 ```bash
-dotnet ef database update
+dotnet ef database update --project Infrastructure/Infrastructure.csproj --startup-project UrlShortener/UrlShortener.csproj
 ```
 
 ---
@@ -75,14 +76,13 @@ dotnet ef database update
 Start the API:
 
 ```bash
+cd UrlShortener
 dotnet run
 ```
 ---
 ## Frontend Setup (React)
 
-### 1. Unzip and Open the API Project
-
-Unzip and navigate to the API folder:
+navigate to the React folder:
 ```bash
 cd /UrlShortener.UI/url-shortener-client
 ```
@@ -97,9 +97,15 @@ npm install --legacy-peer-deps
 ### 3. Run React App
 
 ```bash
-npm start
+npm run dev
 ```
 
 Visit: [http://localhost:5173](http://localhost:5173)
 
 ---
+## To test Admin Functionality use this login:
+
+`Username: admin`  
+`Email: admin@example.com`  
+`Password: Admin123!`
+
