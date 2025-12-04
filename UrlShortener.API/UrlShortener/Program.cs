@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -5,9 +6,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Models;
+using Models.MapperProfiles;
 using Services;
 using Services.ServiceContracts;
 
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
@@ -15,6 +18,18 @@ builder.Services.AddDbContext<UrlShortenerDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
+    {
+        options.Password.RequireDigit = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequiredLength = 6;
+        
+        options.User.RequireUniqueEmail = true;
+    })
+    .AddEntityFrameworkStores<UrlShortenerDbContext>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -35,28 +50,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
-    {
-        options.Password.RequireDigit = false;
-        options.Password.RequireLowercase = false;
-        options.Password.RequireUppercase = false;
-        options.Password.RequireNonAlphanumeric = false;
-        options.Password.RequiredLength = 6;
-        
-        options.User.RequireUniqueEmail = true;
-    })
-    .AddEntityFrameworkStores<UrlShortenerDbContext>();
-
+builder.Services.AddAutoMapper(typeof(ShortenUrlProfile));
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUrlShortenerService, UrlShortenerService>();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+    
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 using (var scope = app.Services.CreateScope())
@@ -72,12 +83,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllers();
 
 app.Run();

@@ -21,13 +21,16 @@ public class UrlShortenerService : IUrlShortenerService
         _mapper = mapper;
     }
     
-    public async Task<Guid> ShortenUrlAndSaveAsync(CreateShortenUrlDto createShortenedUrlDto, Guid userId)
+    public async Task<Guid> SaveShortenUrlAsync(CreateShortenUrlDto createShortenedUrlDto, Guid userId)
     {
         var shortenedUrl = _mapper.Map<ShortenUrl>(createShortenedUrlDto);
         shortenedUrl.UserIdCreatedBy = userId;
         
-        var shortenedLink = ShortenUrl(shortenedUrl.OriginalLink);
-        shortenedUrl.ShortenedLink = shortenedLink;
+        if (createShortenedUrlDto.ShortenUrl == null)
+        {
+            var shortenedLink = ShortenUrl(createShortenedUrlDto.OriginalLink);
+            shortenedUrl.ShortenedLink = shortenedLink;
+        }
         
         if(await ShortenUrlExists(shortenedUrl.ShortenedLink))
             return Guid.Empty;
@@ -66,6 +69,12 @@ public class UrlShortenerService : IUrlShortenerService
         
         var shortenUrlDto = _mapper.Map<GetShortenUrlDetailDto>(shortenUrl);
         return shortenUrlDto;
+    }
+
+    public async Task<string> GetShortenedUrlByShortenedLinkAsync(string shortenedLink)
+    {
+        var result = await _dbContext.ShortenedUrls.FirstOrDefaultAsync(s => s.ShortenedLink == shortenedLink);
+        return result!.OriginalLink;
     }
 
     private string ShortenUrl(string url, int length = 8)

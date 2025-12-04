@@ -11,12 +11,10 @@ public class ShortenUrlProfile : Profile
         // Map from Create DTO to entity and back. Create DTO uses `ShortenUrl` while entity uses `ShortenedLink`.
         CreateMap<CreateShortenUrlDto, ShortenUrl>()
             .ForMember(dest => dest.ShortenedLink, opt => opt.MapFrom(src => src.ShortenUrl))
-            .ForMember(dest => dest.Id, opt => Guid.NewGuid())
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
             .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.Now))
             .ForMember(dest => dest.UserIdCreatedBy, opt => opt.Ignore())
-            .ForMember(dest => dest.ApplicationUserCreated, opt => opt.Ignore())
-            .ReverseMap()
-            .ForMember(dest => dest.ShortenUrl, opt => opt.MapFrom(src => src.ShortenedLink));
+            .ForMember(dest => dest.ApplicationUserCreated, opt => opt.Ignore());
 
         // Entity -> summary DTO
         CreateMap<ShortenUrl, GetShortenUrlSummaryDto>();
