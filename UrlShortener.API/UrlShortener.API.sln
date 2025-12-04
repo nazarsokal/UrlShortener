@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{F5BF46D8-083D-46D8-A672-85F87207523F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortenerTests", "UrlShortenerTests\UrlShortenerTests.csproj", "{52F48151-75D9-4937-AC9B-1805F93FA212}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{F5BF46D8-083D-46D8-A672-85F87207523F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5BF46D8-083D-46D8-A672-85F87207523F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5BF46D8-083D-46D8-A672-85F87207523F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F48151-75D9-4937-AC9B-1805F93FA212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F48151-75D9-4937-AC9B-1805F93FA212}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F48151-75D9-4937-AC9B-1805F93FA212}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F48151-75D9-4937-AC9B-1805F93FA212}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
