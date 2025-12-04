@@ -12,7 +12,7 @@ UrlShortener is a full-stack web application for creating and managing shortened
 - **.NET 8 SDK or newer** (for API)
 - **Docker** (for running SQL Server database)
 - **EF Core CLI** (optional, for DB migrations)
-
+   
 ---
 ## Backend Setup (ASP.NET Core API)
 
@@ -103,3 +103,9 @@ npm run dev
 Visit: [http://localhost:5173](http://localhost:5173)
 
 ---
+## To test Admin Functionality use this login:
+
+`Username: admin`  
+`Email: admin@example.com`  
+`Password: Admin123!`
+
