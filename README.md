@@ -25,6 +25,7 @@ cd UrlShortener
 ### 2. Restore Dependencies
 
 ```bash
+cd UrlShortener.API
 dotnet restore
 ```
 
@@ -60,12 +61,16 @@ In `appsettings.json` of the API project, update your connection string like thi
 To generate a new migration:
 
 ```bash
-dotnet ef migrations add InitialCreate --output-dir Infrastructure/Migrations
+dotnet ef migrations add InitialMigration \
+    --project ../Infrastructure \
+    --startup-project .
 ```
 
 To create the database:
 ```bash
-dotnet ef database update
+dotnet ef database update \
+    --project ../Infrastructure \
+    --startup-project .
 ```
 
 ---
