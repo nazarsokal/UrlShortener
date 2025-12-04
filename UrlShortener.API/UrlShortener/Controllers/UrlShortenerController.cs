@@ -24,7 +24,7 @@ public class UrlShortenerController : ControllerBase
         _userManager = userManager;
     }
 
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "USER")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "USER,ADMIN")]
     [HttpPost("create")]
     public async Task<IActionResult> CreateShortenedUrl([FromBody] CreateShortenUrlDto dto)
     {
@@ -66,7 +66,7 @@ public class UrlShortenerController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("getbyshortlink")]
+    [HttpGet("/{shortLink}")]
     public async Task<IActionResult> GetShortenedUrlByShortLink(string shortLink)
     {
         var urlSummary = await _urlShortenerService.GetShortenedUrlByShortenedLinkAsync(shortLink).ConfigureAwait(false);
@@ -75,5 +75,15 @@ public class UrlShortenerController : ControllerBase
             return NotFound();
         
         return Redirect(urlSummary);
+    }
+
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "USER,ADMIN")]
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> DeleteShortenedUrl(Guid id)
+    {
+        var result = await _urlShortenerService.DeleteShortenedUrlAsync(id).ConfigureAwait(false);
+        if (result)
+            return Ok();
+        return NotFound();
     }
 }

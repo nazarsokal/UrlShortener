@@ -73,8 +73,18 @@ public class UrlShortenerService : IUrlShortenerService
 
     public async Task<string> GetShortenedUrlByShortenedLinkAsync(string shortenedLink)
     {
-        var result = await _dbContext.ShortenedUrls.FirstOrDefaultAsync(s => s.ShortenedLink == shortenedLink);
+        var result = await _dbContext.ShortenedUrls.FirstOrDefaultAsync(s => s.ShortenedLink.Contains(shortenedLink));
         return result!.OriginalLink;
+    }
+
+    public async Task<bool> DeleteShortenedUrlAsync(Guid id)
+    {
+        var result = await _dbContext.ShortenedUrls.FirstOrDefaultAsync(s => s.Id == id);
+        if (result == null)
+            return false;
+        _dbContext.ShortenedUrls.Remove(result);
+        var rows = await _dbContext.SaveChangesAsync();
+        return rows > 0;
     }
 
     private string ShortenUrl(string url, int length = 8)

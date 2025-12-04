@@ -12,4 +12,6 @@ public interface IUrlShortenerService
     public Task<GetShortenUrlDetailDto> GetShortenedUrlAsync(Guid id);
     
     public Task<string> GetShortenedUrlByShortenedLinkAsync(string shortenedLink);
+    
+    public Task<bool> DeleteShortenedUrlAsync(Guid id);
 }
