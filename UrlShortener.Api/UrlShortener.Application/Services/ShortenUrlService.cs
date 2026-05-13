@@ -11,6 +11,7 @@ public class ShortenUrlService : IShortenUrlService
 {
     private readonly IShortenUrlRepository shortenUrlRepository;
     private readonly IMapper mapper;
+    private readonly string apiUrl = "http://localhost:5000";
 
     public ShortenUrlService(IShortenUrlRepository shortenUrlRepository, IMapper mapper)
     {
@@ -21,7 +22,7 @@ public class ShortenUrlService : IShortenUrlService
     public async Task<Guid> CreateShortenUrl(CreateShortenUrlDto createShortenUrlDto)
     {
         var shortenUrl = this.mapper.Map<ShortenUrl>(createShortenUrlDto);
-        shortenUrl.UrlOriginal = UrlHelper.GenerateShortUrl();
+        shortenUrl.UrlShorten = $"{apiUrl}/{UrlHelper.GenerateShortUrl()}";
         
         await this.shortenUrlRepository.AddAsync(shortenUrl);
         await this.shortenUrlRepository.SaveChangesAsync();
