@@ -1,6 +1,6 @@
-namespace UrlShortener.Application.DTOs;
+namespace UrlShortener.Application.DTOs.Url;
 
-public class UrlSummary
+public class UrlSummaryDto
 {
     public Guid Id { get; set; }
     
