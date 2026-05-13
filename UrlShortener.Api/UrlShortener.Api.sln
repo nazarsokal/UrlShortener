@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Web", "UrlShor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Application", "UrlShortener.Application\UrlShortener.Application.csproj", "{4891F429-CBFA-4FBD-883C-71E10D4C0034}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.DAL", "UrlShortener.DAL\UrlShortener.DAL.csproj", "{7ACC2540-7254-4382-ABB2-343058AC6E6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Tests", "UrlShortener.Tests\UrlShortener.Tests.csproj", "{72E18DDF-1B82-41A5-A2AF-D99F142DF5EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{4891F429-CBFA-4FBD-883C-71E10D4C0034}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4891F429-CBFA-4FBD-883C-71E10D4C0034}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4891F429-CBFA-4FBD-883C-71E10D4C0034}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ACC2540-7254-4382-ABB2-343058AC6E6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ACC2540-7254-4382-ABB2-343058AC6E6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ACC2540-7254-4382-ABB2-343058AC6E6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ACC2540-7254-4382-ABB2-343058AC6E6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72E18DDF-1B82-41A5-A2AF-D99F142DF5EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E18DDF-1B82-41A5-A2AF-D99F142DF5EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72E18DDF-1B82-41A5-A2AF-D99F142DF5EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72E18DDF-1B82-41A5-A2AF-D99F142DF5EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using UrlShortener.DAL.Entities;
 using UrlShortener.DAL.Infrastructure;
-using UrlShortener.DAL.Repositories.RepositoryAbstractions;
+using UrlShortener.DAL.RepositoryAbstractions;
 
 namespace UrlShortener.DAL.Repositories;
 

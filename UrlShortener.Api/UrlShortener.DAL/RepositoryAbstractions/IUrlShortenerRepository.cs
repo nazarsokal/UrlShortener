@@ -1,6 +1,6 @@
 using UrlShortener.DAL.Entities;
 
-namespace UrlShortener.DAL.Repositories.RepositoryAbstractions;
+namespace UrlShortener.DAL.RepositoryAbstractions;
 
 public interface IUrlShortenerRepository<T> where T : class
 {

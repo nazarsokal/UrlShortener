@@ -2,7 +2,7 @@ using UrlShortener.DAL.Infrastructure;
 using Microsoft.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using UrlShortener.DAL.Repositories;
-using UrlShortener.DAL.Repositories.RepositoryAbstractions;
+using UrlShortener.DAL.RepositoryAbstractions;
 
 var builder = WebApplication.CreateBuilder(args);
 
