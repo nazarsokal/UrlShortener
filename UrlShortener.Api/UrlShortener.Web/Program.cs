@@ -1,6 +1,8 @@
 using UrlShortener.DAL.Infrastructure;
 using Microsoft.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using UrlShortener.DAL.Repositories;
+using UrlShortener.DAL.Repositories.RepositoryAbstractions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,8 @@ builder.Services.AddDbContext<UrlShortenerDbContext>(optionsBuilder =>
 {
     optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped(typeof(IUrlShortenerRepository<>),typeof(UrlShortenerRepository<>));
 
 var app = builder.Build();
 

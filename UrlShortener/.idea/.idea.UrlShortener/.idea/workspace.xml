@@ -10,13 +10,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5d10989-1c4a-4387-bad4-f778933a63b2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/Entities/ShortenUrl.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/Entities/User.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/Infrastructure/UrlShortenerDbContext.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.Application/DTOs/CreateUserDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.Application/DTOs/GetUserSummaryDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.Application/DTOs/UrlSummary.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.Application/Services/ServiceAbstractions/IAuthenticationService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/Repositories/RepositoryAbstractions/IUrlShortenerRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/Repositories/UrlShortenerRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.Application/UrlShortener.Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.Application/UrlShortener.Application.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/Entities/ShortenUrl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/Entities/ShortenUrl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/Entities/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/Entities/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/Infrastructure/Migrations/UrlShortenerDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/Infrastructure/Migrations/UrlShortenerDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/Infrastructure/UrlShortenerDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/Infrastructure/UrlShortenerDbContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/UrlShortener.DAL.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.DAL/UrlShortener.DAL.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.Web/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.Web/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.Web/UrlShortener.Web.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.Web/UrlShortener.Web.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.Web/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../UrlShortener.Api/UrlShortener.Web/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UrlShortener/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UrlShortener/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +124,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1778676078862</updated>
-      <workItem from="1778676081105" duration="3765000" />
+      <workItem from="1778676081105" duration="7775000" />
     </task>
     <servers />
   </component>

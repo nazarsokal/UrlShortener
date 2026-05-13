@@ -17,6 +17,9 @@ public class UrlShortenerDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        
+        modelBuilder.Entity<ShortenUrl>()
+            .HasOne(s => s.UserCreatedBy)
+            .WithMany(u => u.ShortenUrls)
+            .HasForeignKey(s => s.UserId);
     }
 }
