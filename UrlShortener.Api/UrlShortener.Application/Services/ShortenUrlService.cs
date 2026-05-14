@@ -19,7 +19,7 @@ public class ShortenUrlService : IShortenUrlService
         this.mapper = mapper;
     }
     
-    public async Task<Guid> CreateShortenUrl(CreateShortenUrlDto createShortenUrlDto)
+    public async Task<Guid> CreateShortenUrlAsync(CreateShortenUrlDto createShortenUrlDto)
     {
         var shortenUrl = this.mapper.Map<ShortenUrl>(createShortenUrlDto);
         shortenUrl.UrlShorten = $"{apiUrl}/{UrlHelper.GenerateShortUrl()}";
@@ -30,13 +30,25 @@ public class ShortenUrlService : IShortenUrlService
         return shortenUrl.Id;
     }
 
-    public Task<IEnumerable<UrlSummaryDto>> GetUrlSummaries()
+    public async Task<IEnumerable<UrlSummaryDto>> GetUrlSummariesAsync()
     {
-        throw new NotImplementedException();
+        var urls = await this.shortenUrlRepository.GetAllAsync();
+        var mappedDto = this.mapper.Map<IEnumerable<UrlSummaryDto>>(urls);
+        
+        return mappedDto;
+    }
+    
+    public async Task<UrlDetailDto> GetUrlDetailByIdAsync(Guid id)
+    {
+        var url = await this.shortenUrlRepository.GetUrlById(id);
+        var mappedDto = this.mapper.Map<UrlDetailDto>(url);
+        
+        return mappedDto;
     }
 
-    public Task<UrlSummaryDto> GetUrlSummaryById(Guid id)
+    public async Task DeleteUrlAsync(Guid id)
     {
-        throw new NotImplementedException();
+        this.shortenUrlRepository.DeleteById(id);
+        await this.shortenUrlRepository.SaveChangesAsync();
     }
 }

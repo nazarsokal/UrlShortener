@@ -34,9 +34,9 @@ public class UrlShortenerRepository<T> : IUrlShortenerRepository<T> where T : cl
         var updatedResult = this.urlDbContext.Update(entity).Entity;
     }
 
-    public void Delete(T entity)
+    public void DeleteById(Guid id)
     {
-        this.urlDbContext.Remove(entity);
+        this.urlDbContext.Remove(id);
     }
 
     public async Task SaveChangesAsync()

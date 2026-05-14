@@ -4,10 +4,12 @@ namespace UrlShortener.Application.ServiceAbstractions;
 
 public interface IShortenUrlService
 {
-    Task<Guid> CreateShortenUrl(CreateShortenUrlDto createShortenUrlDto);
+    Task<Guid> CreateShortenUrlAsync(CreateShortenUrlDto createShortenUrlDto);
     
-    Task<IEnumerable<UrlSummaryDto>> GetUrlSummaries();
+    Task<IEnumerable<UrlSummaryDto>> GetUrlSummariesAsync();
     
-    Task<UrlSummaryDto> GetUrlSummaryById(Guid id);
+    Task<UrlDetailDto> GetUrlDetailByIdAsync(Guid id);
+    
+    Task DeleteUrlAsync(Guid id);
     
 }

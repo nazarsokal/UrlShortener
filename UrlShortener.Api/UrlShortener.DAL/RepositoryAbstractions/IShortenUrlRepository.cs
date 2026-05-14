@@ -7,4 +7,6 @@ public interface IShortenUrlRepository : IUrlShortenerRepository<ShortenUrl>
     Task<ShortenUrl?> GetByShortCodeAsync(string shortCode);
     
     Task<ShortenUrl?> GetByUrlAsync(string url);
+    
+    Task<ShortenUrl?> GetUrlById(Guid id);
 }

@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using UrlShortener.DAL.Entities;
 using UrlShortener.DAL.Infrastructure;
 using UrlShortener.DAL.RepositoryAbstractions;
@@ -22,5 +23,14 @@ public class ShortenUrlRepository : UrlShortenerRepository<ShortenUrl>, IShorten
     public Task<ShortenUrl?> GetByUrlAsync(string url)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<ShortenUrl?> GetUrlById(Guid id)
+    {
+        var url = await this.urlDbContext.ShortenUrls.
+            Include(x => x.UserCreatedBy).
+            FirstOrDefaultAsync(x => x.Id == id);
+        
+        return url;
     }
 }

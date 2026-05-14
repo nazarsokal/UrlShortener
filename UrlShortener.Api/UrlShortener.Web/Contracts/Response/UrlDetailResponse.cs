@@ -10,6 +10,6 @@ public class UrlDetailResponse
     
     public string? Description { get; set; }
     
-    public required string CreatedByUser { get; set; }
+    public required Guid CreatedByUser { get; set; }
 }
 
