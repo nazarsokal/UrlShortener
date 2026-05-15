@@ -17,6 +17,14 @@ public class UrlShortenerDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>()
+            .HasIndex(x => x.Username)
+            .IsUnique();
+        
+        modelBuilder.Entity<ShortenUrl>()
+            .HasIndex(x => x.UrlOriginal)
+            .IsUnique();
+        
         modelBuilder.Entity<ShortenUrl>()
             .HasOne(s => s.UserCreatedBy)
             .WithMany(u => u.ShortenUrls)

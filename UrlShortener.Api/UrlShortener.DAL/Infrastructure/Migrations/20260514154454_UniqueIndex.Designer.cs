@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UrlShortener.DAL.Infrastructure;
 
@@ -11,9 +12,11 @@ using UrlShortener.DAL.Infrastructure;
 namespace UrlShortener.DAL.Infrastructure.Migrations
 {
     [DbContext(typeof(UrlShortenerDbContext))]
-    partial class UrlShortenerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260514154454_UniqueIndex")]
+    partial class UniqueIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

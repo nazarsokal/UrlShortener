@@ -1,12 +1,8 @@
 namespace UrlShortener.Application.DTOs;
 
-public class CreateUserDto
+public class LoginUserDto
 {
-    public Guid Id { get; set; }
-    
     public required string Username { get; set; }
     
     public required string Password { get; set; }
-
-    public DateTime DateJoined { get; set; }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UrlShortener.DAL.Infrastructure;
 
@@ -11,9 +12,11 @@ using UrlShortener.DAL.Infrastructure;
 namespace UrlShortener.DAL.Infrastructure.Migrations
 {
     [DbContext(typeof(UrlShortenerDbContext))]
-    partial class UrlShortenerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260514133116_RoleFieldForUser")]
+    partial class RoleFieldForUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +39,7 @@ namespace UrlShortener.DAL.Infrastructure.Migrations
 
                     b.Property<string>("UrlOriginal")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UrlShorten")
                         .IsRequired()
@@ -46,9 +49,6 @@ namespace UrlShortener.DAL.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UrlOriginal")
-                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -64,7 +64,7 @@ namespace UrlShortener.DAL.Infrastructure.Migrations
                     b.Property<DateTime>("DateJoined")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -74,12 +74,9 @@ namespace UrlShortener.DAL.Infrastructure.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Username")
-                        .IsUnique();
 
                     b.ToTable("Users");
                 });

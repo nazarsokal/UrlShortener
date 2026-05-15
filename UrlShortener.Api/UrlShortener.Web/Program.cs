@@ -1,10 +1,16 @@
+using FluentValidation;
 using UrlShortener.DAL.Infrastructure;
 using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UrlShortener.Application.ServiceAbstractions;
 using UrlShortener.Application.Services;
+using UrlShortener.Application.Validators;
+using UrlShortener.DAL.Entities;
 using UrlShortener.DAL.Repositories;
 using UrlShortener.DAL.RepositoryAbstractions;
+using UrlShortener.Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,10 +28,14 @@ builder.Services.AddDbContext<UrlShortenerDbContext>(optionsBuilder =>
 
 builder.Services.AddAutoMapper(cfg => { }, AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddScoped<IValidator<User>, UserValidator>();
+builder.Services.AddScoped<IValidator<ShortenUrl>, UrlValidator>();
+
 builder.Services.AddScoped(typeof(IUrlShortenerRepository<>),typeof(UrlShortenerRepository<>));
 builder.Services.AddScoped<IShortenUrlRepository, ShortenUrlRepository>();
 
 builder.Services.AddScoped<IShortenUrlService, ShortenUrlService>();
+
 
 var app = builder.Build();
 
@@ -42,6 +52,7 @@ else if(app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

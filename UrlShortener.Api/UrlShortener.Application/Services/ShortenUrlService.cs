@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation;
 using UrlShortener.Application.DTOs.Url;
 using UrlShortener.Application.Helpers;
 using UrlShortener.Application.ServiceAbstractions;
@@ -10,19 +11,23 @@ namespace UrlShortener.Application.Services;
 public class ShortenUrlService : IShortenUrlService
 {
     private readonly IShortenUrlRepository shortenUrlRepository;
+    private IValidator<ShortenUrl> validator;
     private readonly IMapper mapper;
     private readonly string apiUrl = "http://localhost:5000";
 
-    public ShortenUrlService(IShortenUrlRepository shortenUrlRepository, IMapper mapper)
+    public ShortenUrlService(IShortenUrlRepository shortenUrlRepository, IMapper mapper, IValidator<ShortenUrl> validator)
     {
         this.shortenUrlRepository = shortenUrlRepository;
         this.mapper = mapper;
+        this.validator = validator;
     }
     
     public async Task<Guid> CreateShortenUrlAsync(CreateShortenUrlDto createShortenUrlDto)
     {
         var shortenUrl = this.mapper.Map<ShortenUrl>(createShortenUrlDto);
         shortenUrl.UrlShorten = $"{apiUrl}/{UrlHelper.GenerateShortUrl()}";
+        
+        await this.validator.ValidateAndThrowAsync(shortenUrl);
         
         await this.shortenUrlRepository.AddAsync(shortenUrl);
         await this.shortenUrlRepository.SaveChangesAsync();
