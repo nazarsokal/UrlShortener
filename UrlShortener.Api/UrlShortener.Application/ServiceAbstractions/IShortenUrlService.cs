@@ -12,4 +12,5 @@ public interface IShortenUrlService
     
     Task DeleteUrlAsync(Guid id);
     
+    Task<IEnumerable<UrlSummaryDto>> GetUrlSummariesByUserIdAsync(Guid userId);
 }

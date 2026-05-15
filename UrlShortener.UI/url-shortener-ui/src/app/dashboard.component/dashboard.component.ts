@@ -1,12 +1,14 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { UrlManagementService, ShortenedUrlRecord } from './url-management.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, DatePipe],
+  imports: [CommonModule, RouterModule, DatePipe, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -17,10 +19,14 @@ export class DashboardComponent implements OnInit {
   shortenedUrlRecords: ShortenedUrlRecord[] = [];
   isDisplayingAllRecords: boolean = true;
 
+  isShortenModalOpen: boolean = false;
+  newOriginalUrl: string = '';
+  shortenErrorMessage: string = '';
+
   constructor(
     private urlManagementService: UrlManagementService,
     private router: Router,
-    private cdr: ChangeDetectorRef // 1. Inject the change detector
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -43,8 +49,6 @@ export class DashboardComponent implements OnInit {
     this.urlManagementService.fetchAllShortenedUrlRecords().subscribe({
       next: (records) => {
         this.shortenedUrlRecords = records;
-
-        // 2. Force the HTML to update immediately
         this.cdr.detectChanges();
       },
       error: (error) => {
@@ -58,8 +62,6 @@ export class DashboardComponent implements OnInit {
     this.urlManagementService.fetchShortenedUrlRecordsByUserIdentifier(this.currentUserIdentifier).subscribe({
       next: (records) => {
         this.shortenedUrlRecords = records;
-
-        // 3. Force the HTML to update immediately
         this.cdr.detectChanges();
       },
       error: (error) => {
@@ -70,5 +72,43 @@ export class DashboardComponent implements OnInit {
 
   viewRecordInformation(recordIdentifier: string): void {
     console.log(recordIdentifier);
+  }
+
+  openShortenModal(): void {
+    this.isShortenModalOpen = true;
+    this.newOriginalUrl = '';
+    this.shortenErrorMessage = '';
+  }
+
+  closeShortenModal(): void {
+    this.isShortenModalOpen = false;
+  }
+
+  submitShortenUrl(): void {
+    this.shortenErrorMessage = '';
+
+    if (!this.newOriginalUrl) {
+      this.shortenErrorMessage = 'Please enter a URL.';
+      return;
+    }
+
+    this.urlManagementService.shortenUrl(this.newOriginalUrl, '', this.currentUserIdentifier).subscribe({
+      next: () => {
+        this.closeShortenModal();
+        if (this.isDisplayingAllRecords) {
+          this.loadAllUrlRecords();
+        } else {
+          this.loadUserSpecificUrlRecords();
+        }
+      },
+      error: (httpResponse: HttpErrorResponse) => {
+        if (httpResponse.status === 409) {
+          this.shortenErrorMessage = 'This URL has already been shortened.';
+        } else {
+          this.shortenErrorMessage = 'An unexpected error occurred.';
+        }
+        this.cdr.detectChanges();
+      }
+    });
   }
 }

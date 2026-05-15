@@ -22,6 +22,14 @@ export class UrlManagementService {
   }
 
   fetchShortenedUrlRecordsByUserIdentifier(userIdentifier: string): Observable<ShortenedUrlRecord[]> {
-    return this.httpClient.get<ShortenedUrlRecord[]>(`${this.baseApiEndpoint}/${userIdentifier}`);
+    return this.httpClient.get<ShortenedUrlRecord[]>(`${this.baseApiEndpoint}/createdBy/${userIdentifier}`);
+  }
+
+  shortenUrl(originalUrl: string, description: string, userId: string): Observable<any> {
+    return this.httpClient.post(`${this.baseApiEndpoint}/shorten`, {
+      originalUrl: originalUrl,
+      description: description,
+      userId: userId
+    });
   }
 }

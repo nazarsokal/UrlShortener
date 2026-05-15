@@ -19,7 +19,7 @@ public class UrlsController : ControllerBase
         this.mapper = mapper;
     }
 
-    [HttpPost("/shorten")]
+    [HttpPost("shorten")]
     public async Task<ActionResult<string>> ShortenUrlAsync([FromBody] CreateShortenUrlRequest request)
     {
         var url = this.mapper.Map<CreateShortenUrlDto>(request);
@@ -52,5 +52,12 @@ public class UrlsController : ControllerBase
         await this.shortenUrlService.DeleteUrlAsync(id);
 
         return Ok();
+    }
+    
+    [HttpGet("createdBy/{userId}")]
+    public async Task<ActionResult<IEnumerable<UrlSummaryDto>>> GetUrlsByUserIdAsync(Guid userId)
+    {
+        var urls = await this.shortenUrlService.GetUrlSummariesByUserIdAsync(userId);
+        return Ok(urls);
     }
 }

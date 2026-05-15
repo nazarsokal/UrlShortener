@@ -33,4 +33,10 @@ public class ShortenUrlRepository : UrlShortenerRepository<ShortenUrl>, IShorten
         
         return url;
     }
+
+    public async Task<IEnumerable<ShortenUrl>> GetUrlsByUserId(Guid userId)
+    {
+        var urlsCreatedByUsers = await this.urlDbContext.ShortenUrls.Where(x => x.UserId == userId).ToListAsync();
+        return urlsCreatedByUsers;
+    }
 }

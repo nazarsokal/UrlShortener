@@ -4,13 +4,13 @@
       Logged in as: <strong>{{ currentUsername }}</strong>
     </div>
     <nav class="header-navigation-container">
+      <button class="header-action-button" (click)="openShortenModal()">Short Url</button>
       <a routerLink="/dashboard" class="navigation-link">Home</a>
       <a routerLink="/about" class="navigation-link">About</a>
     </nav>
   </header>
 
   <main class="dashboard-main-content">
-
     <div class="table-filter-controls">
       <button
         [class.active-filter]="isDisplayingAllRecords"
@@ -53,4 +53,29 @@
       </tbody>
     </table>
   </main>
+
+  @if (isShortenModalOpen) {
+    <div class="modal-overlay">
+      <div class="modal-content">
+        <h3>Shorten New URL</h3>
+        <div class="form-group">
+          <label for="originalUrlInput">Original URL</label>
+          <input
+            type="text"
+            id="originalUrlInput"
+            [(ngModel)]="newOriginalUrl"
+            placeholder="e.g., instagram.com">
+        </div>
+
+        @if (shortenErrorMessage) {
+          <p class="modal-error-text">{{ shortenErrorMessage }}</p>
+        }
+
+        <div class="modal-actions">
+          <button class="cancel-button" (click)="closeShortenModal()">Cancel</button>
+          <button class="submit-button" (click)="submitShortenUrl()">Shorten</button>
+        </div>
+      </div>
+    </div>
+  }
 </div>

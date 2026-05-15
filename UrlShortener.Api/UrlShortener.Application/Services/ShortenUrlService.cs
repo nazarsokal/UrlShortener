@@ -56,4 +56,12 @@ public class ShortenUrlService : IShortenUrlService
         this.shortenUrlRepository.DeleteById(id);
         await this.shortenUrlRepository.SaveChangesAsync();
     }
+
+    public async Task<IEnumerable<UrlSummaryDto>> GetUrlSummariesByUserIdAsync(Guid userId)
+    {
+        var urls = await this.shortenUrlRepository.GetUrlsByUserId(userId);
+        var mappedDto = this.mapper.Map<IEnumerable<UrlSummaryDto>>(urls);
+        
+        return mappedDto;
+    }
 }
