@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,9 @@ public class UrlsController : ControllerBase
     public async Task<ActionResult<string>> ShortenUrlAsync([FromBody] CreateShortenUrlRequest request)
     {
         var url = this.mapper.Map<CreateShortenUrlDto>(request);
+        
+        url.UserId = GetCurrentUserId();
+        
         var shortenedUrl = await this.shortenUrlService.CreateShortenUrlAsync(url);
         return Ok(shortenedUrl);
     }
@@ -54,8 +58,16 @@ public class UrlsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteUrlAsync(Guid id)
     {
-        await this.shortenUrlService.DeleteUrlAsync(id);
+        var currentUserId = GetCurrentUserId();
+        var ownerId = await shortenUrlService.GetOwnerIdByUrlIdAsync(id);
 
+        if (ownerId == null)
+            return NotFound();
+
+        if (ownerId.Value != currentUserId)
+            return Forbid();
+
+        await shortenUrlService.DeleteUrlAsync(id);
         return Ok();
     }
     
@@ -63,7 +75,19 @@ public class UrlsController : ControllerBase
     [HttpGet("createdBy/{userId}")]
     public async Task<ActionResult<IEnumerable<UrlSummaryDto>>> GetUrlsByUserIdAsync(Guid userId)
     {
-        var urls = await this.shortenUrlService.GetUrlSummariesByUserIdAsync(userId);
+        var currentUserId = GetCurrentUserId();
+        var urls = await shortenUrlService.GetUrlSummariesByUserIdAsync(currentUserId);
         return Ok(urls);
+    }
+    
+    private Guid GetCurrentUserId()
+    {
+        var raw = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (raw != null)
+        {
+            return Guid.Parse(raw);
+        }
+        
+        return Guid.Empty;
     }
 }

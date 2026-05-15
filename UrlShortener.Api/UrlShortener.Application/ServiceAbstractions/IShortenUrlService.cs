@@ -15,4 +15,6 @@ public interface IShortenUrlService
     Task<IEnumerable<UrlSummaryDto>> GetUrlSummariesByUserIdAsync(Guid userId);
     
     Task<string> GetOriginalUrlByShortCodeAsync(string shortCode);
+    
+    Task<Guid?> GetOwnerIdByUrlIdAsync(Guid urlId);
 }

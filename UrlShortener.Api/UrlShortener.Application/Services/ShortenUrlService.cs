@@ -74,4 +74,11 @@ public class ShortenUrlService : IShortenUrlService
         
         return string.Empty;
     }
+
+    public async Task<Guid?> GetOwnerIdByUrlIdAsync(Guid urlId)
+    {
+        var url = await this.shortenUrlRepository.GetUrlById(urlId);
+        
+        return url?.UserId;
+    }
 }
