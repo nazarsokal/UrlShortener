@@ -223,3 +223,16 @@
   }
 }
 
+.delete-button {
+  padding: 0.25rem 0.75rem;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-left: 0.5rem;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}

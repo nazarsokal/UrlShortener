@@ -11,4 +11,5 @@ public interface IShortenUrlRepository : IUrlShortenerRepository<ShortenUrl>
     Task<ShortenUrl?> GetUrlById(Guid id);
 
     public Task<IEnumerable<ShortenUrl>> GetUrlsByUserId(Guid userId);
+    
 }

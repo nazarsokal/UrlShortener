@@ -44,4 +44,8 @@ export class UrlManagementService {
   fetchUrlDetails(urlId: string): Observable<UrlDetailsRecord> {
     return this.httpClient.get<UrlDetailsRecord>(`${this.baseApiEndpoint}/${urlId}`);
   }
+
+  deleteShortenedUrlRecord(urlIdentifier: string): Observable<any> {
+    return this.httpClient.delete(`${this.baseApiEndpoint}/${urlIdentifier}`);
+  }
 }

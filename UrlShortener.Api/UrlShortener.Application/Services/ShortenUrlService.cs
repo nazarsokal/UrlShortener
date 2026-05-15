@@ -53,7 +53,7 @@ public class ShortenUrlService : IShortenUrlService
 
     public async Task DeleteUrlAsync(Guid id)
     {
-        this.shortenUrlRepository.DeleteById(id);
+        await this.shortenUrlRepository.DeleteById(id);
         await this.shortenUrlRepository.SaveChangesAsync();
     }
 

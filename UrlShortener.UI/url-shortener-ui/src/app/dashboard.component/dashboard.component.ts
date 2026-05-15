@@ -86,6 +86,22 @@ export class DashboardComponent implements OnInit {
     this.isShortenModalOpen = false;
   }
 
+  deleteShortenedUrlRecord(urlIdentifier: string): void {
+    const userConfirmedDeletion = window.confirm('Are you sure you want to delete this shortened URL?');
+
+    if (userConfirmedDeletion) {
+      this.urlManagementService.deleteShortenedUrlRecord(urlIdentifier).subscribe({
+        next: () => {
+          this.loadUserSpecificUrlRecords();
+        },
+        error: (httpErrorResponse: HttpErrorResponse) => {
+          console.error(httpErrorResponse);
+          alert('Failed to delete the URL record. Please try again.');
+        }
+      });
+    }
+  }
+
   submitShortenUrl(): void {
     this.shortenErrorMessage = '';
 

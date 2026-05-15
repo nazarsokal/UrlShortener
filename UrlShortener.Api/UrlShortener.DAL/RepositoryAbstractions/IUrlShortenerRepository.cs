@@ -12,7 +12,7 @@ public interface IUrlShortenerRepository<T> where T : class
     
     void Update(T entity);
     
-    void DeleteById(Guid id);
+    Task DeleteById(Guid id);
     
     Task SaveChangesAsync();
 }

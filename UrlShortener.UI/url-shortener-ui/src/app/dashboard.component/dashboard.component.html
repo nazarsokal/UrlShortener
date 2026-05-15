@@ -43,6 +43,12 @@
               <button class="information-button" (click)="viewRecordInformation(record.id)">
                 Info
               </button>
+
+              @if (!isDisplayingAllRecords) {
+                <button class="delete-button" (click)="deleteShortenedUrlRecord(record.id)">
+                  Delete
+                </button>
+              }
             </td>
           </tr>
         } @empty {
