@@ -122,7 +122,12 @@ export class DashboardComponent implements OnInit {
       error: (httpResponse: HttpErrorResponse) => {
         if (httpResponse.status === 409) {
           this.shortenErrorMessage = 'This URL has already been shortened.';
-        } else {
+        }
+        else if(httpResponse.status === 400)
+        {
+          this.shortenErrorMessage = 'Invalid URL provided.';
+        }
+        else {
           this.shortenErrorMessage = 'An unexpected error occurred.';
         }
         this.cdr.detectChanges();
