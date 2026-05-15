@@ -1,4 +1,5 @@
 using AutoMapper;
+using UrlShortener.Application.DTOs;
 using UrlShortener.Application.DTOs.Url;
 using UrlShortener.Web.Contracts.Request;
 using UrlShortener.Web.Contracts.Response;
@@ -9,17 +10,19 @@ public class ContractsMappingProfile : Profile
 {
     public ContractsMappingProfile()
     {
-        // Map CreateShortenUrlContract to CreateShortenUrlDto
         CreateMap<CreateShortenUrlRequest, CreateShortenUrlDto>()
             .ForMember(dest => dest.UrlOriginal, opt => opt.MapFrom(src => src.OriginalUrl));
 
-        // Map UrlDetailDto to UrlDetailResponse
         CreateMap<UrlDetailDto, UrlDetailResponse>();
 
-        // Map UrlSummaryDto to UrlSummaryResponse
         CreateMap<UrlSummaryDto, UrlSummaryResponse>();
 
-        // Map UrlSummaryDto to CreateShortenUrlResponse
         CreateMap<UrlSummaryDto, CreateShortenUrlResponse>();
+
+        CreateMap<PostUserRequest, CreateUserDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
+            .ForMember(dest => dest.DateJoined, opt => opt.MapFrom(src => DateTime.Now));
+
+        CreateMap<PostUserRequest, LoginUserDto>();
     }
 }

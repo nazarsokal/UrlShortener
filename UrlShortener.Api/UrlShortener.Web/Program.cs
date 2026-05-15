@@ -14,12 +14,21 @@ using UrlShortener.Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost4200", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
 builder.Services.AddDbContext<UrlShortenerDbContext>(optionsBuilder =>
 {
@@ -33,8 +42,10 @@ builder.Services.AddScoped<IValidator<ShortenUrl>, UrlValidator>();
 
 builder.Services.AddScoped(typeof(IUrlShortenerRepository<>),typeof(UrlShortenerRepository<>));
 builder.Services.AddScoped<IShortenUrlRepository, ShortenUrlRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IShortenUrlService, ShortenUrlService>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 
 var app = builder.Build();
@@ -57,6 +68,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseCors("AllowLocalhost4200");
 
 app.UseAuthorization();
 

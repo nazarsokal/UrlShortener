@@ -1,0 +1,48 @@
+<div class="authentication-container">
+  <h2>{{ isLoginModeActive ? 'Login' : 'Register' }}</h2>
+
+  <form (ngSubmit)="onSubmitCredentials()">
+    <div class="form-group">
+      <label for="usernameInput">Username</label>
+      <input
+        type="text"
+        id="usernameInput"
+        name="username"
+        [(ngModel)]="userCredentials.username"
+        required>
+    </div>
+
+    <div class="form-group">
+      <label for="passwordInput">Password</label>
+      <input
+        type="password"
+        id="passwordInput"
+        name="password"
+        [(ngModel)]="userCredentials.password"
+        required>
+    </div>
+
+    <button type="submit">
+      {{ isLoginModeActive ? 'Login' : 'Register' }}
+    </button>
+  </form>
+
+  @if (validationErrorMessages.length > 0) {
+    <div style="background-color: #fef2f2; border: 1px solid #dc2626; padding: 12px; margin-bottom: 15px; border-radius: 4px;">
+      <p style="color: #dc2626; font-weight: bold; margin-top: 0; margin-bottom: 8px;">
+        Please correct the following errors:
+      </p>
+      <ul style="margin: 0; padding-left: 20px;">
+        @for (errorMessage of validationErrorMessages; track errorMessage) {
+          <li style="color: #dc2626; margin-bottom: 4px; font-size: 14px;">
+            {{ errorMessage }}
+          </li>
+        }
+      </ul>
+    </div>
+  }
+
+  <button type="button" (click)="toggleAuthenticationMode()">
+    Switch to {{ isLoginModeActive ? 'Register' : 'Login' }}
+  </button>
+</div>

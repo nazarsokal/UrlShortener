@@ -1,0 +1,132 @@
+.authentication-container {
+  max-width: 420px;
+  margin: 56px auto;
+  padding: 32px;
+  border-radius: 20px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+}
+
+.authentication-container h2 {
+  margin: 0 0 28px;
+  text-align: center;
+  color: #0f172a;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #334155;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background-color: #ffffff;
+  color: #0f172a;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.form-group input:hover {
+  border-color: #94a3b8;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+button {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button[type="submit"] {
+  margin-top: 6px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.18);
+}
+
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.24);
+}
+
+button[type="button"] {
+  margin-top: 12px;
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+button[type="button"]:hover {
+  background-color: #cbd5e1;
+}
+
+.error-messages-container {
+  margin-top: 18px;
+  margin-bottom: 6px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #fecaca;
+  background: linear-gradient(180deg, #fff5f5 0%, #fff1f2 100%);
+  color: #b91c1c;
+}
+
+.error-messages-container ul {
+  margin: 10px 0 0;
+  padding-left: 20px;
+}
+
+.error-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #991b1b;
+}
+
+.error-text {
+  margin: 6px 0;
+  color: #b91c1c;
+  font-size: 0.93rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 480px) {
+  .authentication-container {
+    margin: 20px 16px;
+    padding: 24px 18px;
+    border-radius: 16px;
+  }
+
+  .authentication-container h2 {
+    font-size: 1.55rem;
+    margin-bottom: 22px;
+  }
+}
+
