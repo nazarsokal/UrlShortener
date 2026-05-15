@@ -1,1 +1,56 @@
-<p>dashboard.component works!</p>
+<div class="dashboard-wrapper">
+  <header class="dashboard-header">
+    <div class="header-user-information">
+      Logged in as: <strong>{{ currentUsername }}</strong>
+    </div>
+    <nav class="header-navigation-container">
+      <a routerLink="/dashboard" class="navigation-link">Home</a>
+      <a routerLink="/about" class="navigation-link">About</a>
+    </nav>
+  </header>
+
+  <main class="dashboard-main-content">
+
+    <div class="table-filter-controls">
+      <button
+        [class.active-filter]="isDisplayingAllRecords"
+        (click)="loadAllUrlRecords()">
+        All URLs
+      </button>
+      <button
+        [class.active-filter]="!isDisplayingAllRecords"
+        (click)="loadUserSpecificUrlRecords()">
+        My URLs
+      </button>
+    </div>
+
+    <table class="url-records-table">
+      <thead>
+      <tr>
+        <th>Original URL</th>
+        <th>Shortened URL</th>
+        <th>Date Created</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (record of shortenedUrlRecords; track record.id) {
+          <tr>
+            <td class="original-url-cell">{{ record.urlOriginal }}</td>
+            <td><a [href]="record.urlShortened" target="_blank">{{ record.urlShortened }}</a></td>
+            <td>{{ record.dateCreated | date:'short' }}</td>
+            <td>
+              <button class="information-button" (click)="viewRecordInformation(record.id)">
+                Info
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="empty-table-message">No URL records found.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </main>
+</div>

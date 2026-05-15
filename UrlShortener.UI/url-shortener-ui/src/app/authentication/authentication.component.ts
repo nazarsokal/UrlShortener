@@ -39,6 +39,7 @@ export class AuthenticationComponent {
     if (this.isLoginModeActive) {
       this.authenticationService.loginUser(this.userCredentials).subscribe({
         next: (response) => {
+          localStorage.setItem('currentUser', JSON.stringify(response));
           this.router.navigate(['/dashboard']);
         },
         error: (httpErrorResponse: HttpErrorResponse) => {
