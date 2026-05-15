@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UrlShortener.Application.DTOs.Url;
 using UrlShortener.Application.ServiceAbstractions;
@@ -19,6 +20,7 @@ public class UrlsController : ControllerBase
         this.mapper = mapper;
     }
 
+    [Authorize]
     [HttpPost("shorten")]
     public async Task<ActionResult<string>> ShortenUrlAsync([FromBody] CreateShortenUrlRequest request)
     {
@@ -27,6 +29,7 @@ public class UrlsController : ControllerBase
         return Ok(shortenedUrl);
     }
     
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UrlSummaryDto>>> GetUrlsAsync()
     {
@@ -34,6 +37,7 @@ public class UrlsController : ControllerBase
         return Ok(urls);
     }
     
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<ActionResult<UrlDetailDto>> GetUrlByIdAsync(Guid id)
     {
@@ -46,6 +50,7 @@ public class UrlsController : ControllerBase
         return Ok(url);
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteUrlAsync(Guid id)
     {
@@ -54,6 +59,7 @@ public class UrlsController : ControllerBase
         return Ok();
     }
     
+    [Authorize]
     [HttpGet("createdBy/{userId}")]
     public async Task<ActionResult<IEnumerable<UrlSummaryDto>>> GetUrlsByUserIdAsync(Guid userId)
     {

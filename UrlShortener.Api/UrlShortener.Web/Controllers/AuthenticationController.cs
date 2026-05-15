@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using UrlShortener.Application.DTOs;
@@ -20,6 +21,7 @@ public class AuthenticationController : ControllerBase
         this.mapper = mapper;
     }
 
+    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] PostUserRequest request)
     {
@@ -29,6 +31,7 @@ public class AuthenticationController : ControllerBase
         return this.Ok(foundUser);
     }
     
+    [AllowAnonymous]
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] PostUserRequest request)
     {

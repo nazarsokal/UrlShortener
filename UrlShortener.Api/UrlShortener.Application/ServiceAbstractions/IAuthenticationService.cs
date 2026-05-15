@@ -4,7 +4,7 @@ namespace UrlShortener.Application.ServiceAbstractions;
 
 public interface IAuthenticationService
 {
-    public Task<Guid> RegisterUserAsync(CreateUserDto createUserDto); 
+    public Task<AuthUserDto> RegisterUserAsync(CreateUserDto createUserDto); 
     
-    public Task<GetUserSummaryDto> LoginUserAsync(LoginUserDto loginDto);
+    public Task<AuthUserDto> LoginUserAsync(LoginUserDto loginDto);
 }

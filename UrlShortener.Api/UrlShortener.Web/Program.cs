@@ -1,9 +1,10 @@
+using System.Text;
 using FluentValidation;
 using UrlShortener.DAL.Infrastructure;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using UrlShortener.Application.Helpers;
 using UrlShortener.Application.ServiceAbstractions;
 using UrlShortener.Application.Services;
 using UrlShortener.Application.Validators;
@@ -30,6 +31,26 @@ builder.Services.AddCors(options =>
     });
 });
 
+var jwt = builder.Configuration.GetSection("Jwt");
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwt["Issuer"],
+            ValidAudience = jwt["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt["Key"])),
+            ClockSkew = TimeSpan.FromMinutes(5)
+        };
+    });
+
+builder.Services.AddAuthorization();
+
 builder.Services.AddDbContext<UrlShortenerDbContext>(optionsBuilder =>
 {
     optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -46,6 +67,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IShortenUrlService, ShortenUrlService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+builder.Services.AddScoped<JwtHelper>();
 
 
 var app = builder.Build();
@@ -71,6 +94,7 @@ app.UseRouting();
 
 app.UseCors("AllowLocalhost4200");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

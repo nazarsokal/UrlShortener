@@ -2,6 +2,7 @@ using AutoMapper;
 using FluentValidation;
 using UrlShortener.Application.DTOs;
 using UrlShortener.Application.Exceptions;
+using UrlShortener.Application.Helpers;
 using UrlShortener.Application.ServiceAbstractions;
 using UrlShortener.DAL.Entities;
 using UrlShortener.DAL.RepositoryAbstractions;
@@ -12,16 +13,18 @@ public class AuthenticationService : IAuthenticationService
 {
     private readonly IUserRepository userRepository;
     private readonly IValidator<User> validator;
+    private readonly JwtHelper jwtHelper;
     private readonly IMapper mapper;
 
-    public AuthenticationService(IUserRepository userRepository, IMapper mapper, IValidator<User> validator)
+    public AuthenticationService(IUserRepository userRepository, IMapper mapper, IValidator<User> validator, JwtHelper jwtHelper)
     {
         this.userRepository = userRepository;
         this.mapper = mapper;
         this.validator = validator;
+        this.jwtHelper = jwtHelper;
     }
     
-    public async Task<Guid> RegisterUserAsync(CreateUserDto createUserDto)
+    public async Task<AuthUserDto> RegisterUserAsync(CreateUserDto createUserDto)
     {
         var user = this.mapper.Map<User>(createUserDto);
         
@@ -29,11 +32,16 @@ public class AuthenticationService : IAuthenticationService
         
         await this.userRepository.AddAsync(user);
         await this.userRepository.SaveChangesAsync();
-        
-        return user.Id;
+
+        return new AuthUserDto()
+        {
+            Id = user.Id,
+            Username = user.Username,
+            AccessToken = this.jwtHelper.Generate(user),
+        };
     }
 
-    public async Task<GetUserSummaryDto> LoginUserAsync(LoginUserDto loginDto)
+    public async Task<AuthUserDto> LoginUserAsync(LoginUserDto loginDto)
     {
         var foundUser = await this.userRepository.GetUserByUsernameAsync(loginDto.Username);
 
@@ -47,6 +55,11 @@ public class AuthenticationService : IAuthenticationService
             throw new UnauthorizedAccessException("Invalid password");
         }
         
-        return this.mapper.Map<GetUserSummaryDto>(foundUser);
+        return new AuthUserDto()
+        {
+            Id = foundUser.Id,
+            Username = foundUser.Username,
+            AccessToken = this.jwtHelper.Generate(foundUser),
+        };
     }
 }

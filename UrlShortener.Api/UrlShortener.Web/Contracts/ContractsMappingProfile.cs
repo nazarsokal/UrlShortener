@@ -24,5 +24,7 @@ public class ContractsMappingProfile : Profile
             .ForMember(dest => dest.DateJoined, opt => opt.MapFrom(src => DateTime.Now));
 
         CreateMap<PostUserRequest, LoginUserDto>();
+        
+        CreateMap<AuthUserDto, AuthResponse>();
     }
 }
