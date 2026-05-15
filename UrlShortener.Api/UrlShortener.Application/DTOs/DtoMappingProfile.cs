@@ -14,7 +14,7 @@ public class DtoMappingProfile : Profile
             .ForMember(dest => dest.UrlOriginal, opt => opt.MapFrom(src => src.UrlOriginal.Trim().ToLower()));
         
         CreateMap<ShortenUrl, UrlDetailDto>()
-            .ForMember(dest => dest.CreatedByUser, opt => opt.MapFrom(src => src.UserCreatedBy.Id));
+            .ForMember(dest => dest.CreatedByUser, opt => opt.MapFrom(src => src.UserCreatedBy.Username));
         
         CreateMap<ShortenUrl, UrlSummaryDto>()
             .ForMember(dest => dest.UrlShortened, opt => opt.MapFrom(src => src.UrlShorten));

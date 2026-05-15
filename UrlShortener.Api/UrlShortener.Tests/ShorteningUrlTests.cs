@@ -115,7 +115,7 @@ public class ShortenUrlServiceTests
         {
             Id = id,
             UrlOriginal = "https://youtube.com",
-            CreatedByUser = Guid.NewGuid(),
+            CreatedByUser = "Some User",
         };
 
         _repository.GetUrlById(id).Returns(entity);
