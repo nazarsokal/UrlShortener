@@ -16,7 +16,7 @@ public class ShortenUrlRepository : UrlShortenerRepository<ShortenUrl>, IShorten
 
     public async Task<ShortenUrl?> GetByShortCodeAsync(string shortCode)
     {
-        var shortenUrl = await this.urlDbContext.ShortenUrls.FindAsync(shortCode);
+        var shortenUrl = await this.urlDbContext.ShortenUrls.FirstOrDefaultAsync(x=> x.UrlShorten == shortCode);
         return shortenUrl;
     }
 

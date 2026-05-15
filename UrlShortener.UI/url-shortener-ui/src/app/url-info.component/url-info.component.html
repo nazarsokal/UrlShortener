@@ -1,0 +1,52 @@
+<div class="dashboard-wrapper">
+  <header class="dashboard-header">
+    <div class="header-user-information">
+      Logged in as: <strong>{{ currentUsername }}</strong>
+    </div>
+    <nav class="header-navigation-container">
+      <a routerLink="/dashboard" class="navigation-link">Home</a>
+      <a routerLink="/about" class="navigation-link">About</a>
+    </nav>
+  </header>
+
+  <main class="dashboard-main-content">
+    <button class="back-button" (click)="goBack()">← Back to Dashboard</button>
+
+    @if (errorMessage) {
+      <div class="error-container">
+        <p>{{ errorMessage }}</p>
+      </div>
+    }
+
+    @if (urlDetails) {
+      <div class="info-card">
+        <h2>URL Details</h2>
+
+        <div class="detail-row">
+          <span class="detail-label">ID:</span>
+          <span class="detail-value">{{ urlDetails.id }}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Original URL:</span>
+          <span class="detail-value">{{ urlDetails.urlOriginal }}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Description:</span>
+          <span class="detail-value">{{ urlDetails.description || 'No description provided' }}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Created By (User ID):</span>
+          <span class="detail-value">{{ urlDetails.createdByUser }}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Date Created:</span>
+          <span class="detail-value">{{ urlDetails.dateCreated | date:'medium' }}</span>
+        </div>
+      </div>
+    }
+  </main>
+</div>

@@ -13,7 +13,7 @@ public class ShortenUrlService : IShortenUrlService
     private readonly IShortenUrlRepository shortenUrlRepository;
     private IValidator<ShortenUrl> validator;
     private readonly IMapper mapper;
-    private readonly string apiUrl = "http://localhost:5000";
+    private readonly string apiUrl = "http://localhost:5017";
 
     public ShortenUrlService(IShortenUrlRepository shortenUrlRepository, IMapper mapper, IValidator<ShortenUrl> validator)
     {
@@ -63,5 +63,15 @@ public class ShortenUrlService : IShortenUrlService
         var mappedDto = this.mapper.Map<IEnumerable<UrlSummaryDto>>(urls);
         
         return mappedDto;
+    }
+
+    public async Task<string> GetOriginalUrlByShortCodeAsync(string shortCode)
+    {
+        var foundUrl = await this.shortenUrlRepository.GetByShortCodeAsync($"{apiUrl}/{shortCode}");
+
+        if (foundUrl != null) 
+            return foundUrl.UrlOriginal;
+        
+        return string.Empty;
     }
 }

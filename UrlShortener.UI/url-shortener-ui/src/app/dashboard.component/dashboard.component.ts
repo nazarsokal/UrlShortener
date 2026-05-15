@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
 
   isShortenModalOpen: boolean = false;
   newOriginalUrl: string = '';
+  newDescription: string = '';
   shortenErrorMessage: string = '';
 
   constructor(
@@ -71,12 +72,13 @@ export class DashboardComponent implements OnInit {
   }
 
   viewRecordInformation(recordIdentifier: string): void {
-    console.log(recordIdentifier);
+    this.router.navigate(['/info', recordIdentifier]);
   }
 
   openShortenModal(): void {
     this.isShortenModalOpen = true;
     this.newOriginalUrl = '';
+    this.newDescription = '';
     this.shortenErrorMessage = '';
   }
 
@@ -92,7 +94,7 @@ export class DashboardComponent implements OnInit {
       return;
     }
 
-    this.urlManagementService.shortenUrl(this.newOriginalUrl, '', this.currentUserIdentifier).subscribe({
+    this.urlManagementService.shortenUrl(this.newOriginalUrl, this.newDescription, this.currentUserIdentifier).subscribe({
       next: () => {
         this.closeShortenModal();
         if (this.isDisplayingAllRecords) {

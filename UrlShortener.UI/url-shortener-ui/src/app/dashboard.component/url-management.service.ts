@@ -9,6 +9,14 @@ export interface ShortenedUrlRecord {
   dateCreated: string;
 }
 
+export interface UrlDetailsRecord {
+  id: string;
+  urlOriginal: string;
+  dateCreated: string;
+  description: string;
+  createdByUser: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,5 +39,9 @@ export class UrlManagementService {
       description: description,
       userId: userId
     });
+  }
+
+  fetchUrlDetails(urlId: string): Observable<UrlDetailsRecord> {
+    return this.httpClient.get<UrlDetailsRecord>(`${this.baseApiEndpoint}/${urlId}`);
   }
 }
