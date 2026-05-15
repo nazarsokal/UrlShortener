@@ -33,12 +33,19 @@ export class AuthenticationComponent {
     this.cdr.detectChanges();
   }
 
+
   onSubmitCredentials(): void {
     this.validationErrorMessages = [];
 
     if (this.isLoginModeActive) {
       this.authenticationService.loginUser(this.userCredentials).subscribe({
         next: (response) => {
+          const token = response.accessToken;
+
+          if (token) {
+            localStorage.setItem('accessToken', token);
+          }
+
           localStorage.setItem('currentUser', JSON.stringify(response));
           this.router.navigate(['/dashboard']);
         },

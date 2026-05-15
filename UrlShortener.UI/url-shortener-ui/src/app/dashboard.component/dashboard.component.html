@@ -1,12 +1,24 @@
 <div class="dashboard-wrapper">
   <header class="dashboard-header">
     <div class="header-user-information">
-      <strong>{{ currentUsername }}</strong>
+      @if (isLoggedIn) {
+        <strong>{{ currentUsername }}</strong>
+      } @else {
+        <strong>Guest</strong>
+      }
     </div>
     <nav class="header-navigation-container">
-      <button class="header-action-button" (click)="openShortenModal()">Short Url</button>
+      @if (isLoggedIn) {
+        <button class="header-action-button" (click)="openShortenModal()">Short Url</button>
+      }
       <a routerLink="/dashboard" class="navigation-link">Home</a>
       <a href="http://localhost:5017/about" class="navigation-link">About</a>
+
+      @if (!isLoggedIn) {
+        <a routerLink="/login" class="navigation-link">Login</a>
+      } @else {
+        <a (click)="logout()" class="navigation-link" style="cursor: pointer; color: #dc3545;">Logout</a>
+      }
     </nav>
   </header>
 
@@ -17,11 +29,14 @@
         (click)="loadAllUrlRecords()">
         All URLs
       </button>
-      <button
-        [class.active-filter]="!isDisplayingAllRecords"
-        (click)="loadUserSpecificUrlRecords()">
-        My URLs
-      </button>
+
+      @if (isLoggedIn) {
+        <button
+          [class.active-filter]="!isDisplayingAllRecords"
+          (click)="loadUserSpecificUrlRecords()">
+          My URLs
+        </button>
+      }
     </div>
 
     <table class="url-records-table">
