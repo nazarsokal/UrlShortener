@@ -35,4 +35,10 @@ public class HomeController : Controller
         
         return this.Redirect(originalUrl);
     }
+
+    [HttpGet("about")]
+    public IActionResult About()
+    {
+        return this.View();
+    }
 }
